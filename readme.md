@@ -179,35 +179,35 @@
     * 如果是由小变大，则不需要修改throttle的rc_reverse，反之改为true
     * 其他通道同理
   
-## 第十章：VINS的参数设置与外参标定
-* 检查飞控mavros连接正常
-  * `ls /dev/tty*`，确认飞控的串口连接正常。一般是`/dev/ttyACM0`
-  * `sudo chmod 777 /dev/ttyACM0`，为串口附加权限
+## Глава 10: Настройка параметров и внешняя калибровка VINS
+* Проверьте правильность подключения mavros устройств управления полетом
+  * `ls/dev/tty*', подтвердите, что последовательный порт системы управления полетом подключен нормально.Обычно `/dev/ttyACM0`
+  * 'sudo chmod 777/dev/ttyACM0`, дополнительные разрешения для последовательного порта
   * `roslaunch mavros px4.launch`
-  * `rostopic hz /mavros/imu/data_raw`，确认飞控传输的imu频率在200hz左右
-* 检查realsense驱动正常
+  * `rostopic hz /mavros/imu/data_raw`，Подтвердите, что частота imu передачи управления полетом составляет около 200 Гц
+* Убедитесь, что драйвер realsense работает нормально
   * `roslaunch realsense2_camera rs_camera.launch`
-  * 进入远程桌面，`rqt_image_view`
-  * 查看`/camera/infra1/image_rect_raw`,`/camera/infra2/image_rect_raw`,`/camera/depth/image_rect_raw`话题正常
-* VINS参数设置
-  * 进入`realflight_modules/VINS_Fusion/config/`
+  * Войдите на удаленный рабочий стол，`rqt_image_view`
+  * проверить`/camera/infra1/image_rect_raw`,`/camera/infra2/image_rect_raw`,`/camera/depth/image_rect_raw`Темы нормальные
+* VINS Настройка параметров
+  * Доступ`realflight_modules/VINS_Fusion/config/`
   
-  * 驱动realsense后，`rostopic echo /camera/infra1/camera_info`，把其中的K矩阵中的fx,fy,cx,cy填入`left.yaml`和`right.yaml`
+  * Привод realsense После，`rostopic echo /camera/infra1/camera_info`，Положите матрицу K, в которой fx,fy,cx,cy Заполнить`left.yaml`и`right.yaml`
   
-  * 在home目录创建`vins_output`文件夹(如果你的用户名不是fast-drone，需要修改config内的vins_out_path为你实际创建的文件夹的绝对路径)
+  * Создайте папку `vins_output` в домашнем каталоге (если ваше имя пользователя не является fast-drone, вам нужно изменить vins_out_path в конфигурации, чтобы он был абсолютным путем к папке, которую вы фактически создали)
   
-  * 修改`fast-drone-250.yaml`的`body_T_cam0`和`body_T_cam1`的`data`矩阵的第四列为你的无人机上的相机相对于飞控的实际外参，单位为米，顺序为x/y/z，第四项是1，不用改
+  * Модифицируйте `fast-drone-250.yaml`.Четвертый столбец матрицы "данные" yaml "body_t_cam0" и "body_T_cam1" - это фактические внешние параметры камеры вашего дрона относительно системы управления полетом. Единица измерения - метры, а порядок - x /y /Z. Четвертый элемент равен 1, изменять его не нужно.
   
-* VINS外参精确自标定
+* VINS Точная самокалибровка внешних параметров
   * `sh shfiles/rspx4.sh`
   * `rostopic echo /vins_fusion/imu_propagate`
-  * 拿起飞机沿着场地<font color="#dd0000">尽量缓慢</font>地行走，场地内光照变化不要太大，灯光不要太暗，<font color="#dd0000">不要使用会频闪的光源</font>，尽量多放些杂物来增加VINS用于匹配的特征点
-  * 把`vins_output/extrinsic_parameter.txt`里的内容替换到`fast-drone-250.yaml`的`body_T_cam0`和`body_T_cam1`
-  * 重复上述操作直到走几圈后VINS的里程计数据偏差收敛到满意值（一般在0.3米内）
-* 建图模块验证
+  * Возьмите самолет и пройдитесь по площадке как можно медленнее, освещение в зале не должно сильно меняться, освещение не должно быть слишком темным, не используйте стробоскопические источники света, старайтесь поставить как можно больше всякой всячины увеличьте характерные точки, которые VINS использует для сопоставления. 
+  * Пучок vins_output/extrinsic_parameter.txt заменить содержимое fast-drone-250.yaml из body_T_cam0а также body_T_cam1
+  * Повторяйте вышеуказанную операцию до тех пор, пока отклонение данных одометра VINS не сойдется к удовлетворительному значению после нескольких кругов (обычно в пределах 0,3 метра). 
+* Проверка модуля сопоставления 
   * `sh shfiles/rspx4.sh`
   * `roslaunch ego_planner single_run_in_exp.launch`
-  * 进入远程桌面 `roslaunch ego_planner rviz.launch`
+  * войти в удаленный рабочий стол `roslaunch ego_planner rviz.launch`
 
 ## Глава 11: Эксперименты с Эго-планировщиком
 * Автоматический взлет：
