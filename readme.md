@@ -92,52 +92,52 @@
   * 交换空间（逻辑分区）16000M（内存大小的两倍）
   * 挂载点`/`（主分区）剩余所有容量
   * <font color="#dd0000">笔记本上也需要安装ubuntu，推荐装20.04版本。虚拟机或双系统都可以，如果有长期学习打算推荐双系统</font>
-## 第七章：机载电脑的环境配置
+## Глава 7: Конфигурация среды бортового компьютера 
 
-* ROS安装
+* установка РОС 
   * `sudo sh -c 'echo "deb http://packages.ros.org/ros/ubuntu $(lsb_release -sc) main" > /etc/apt/sources.list.d/ros-latest.list'`
   * `sudo apt-key adv --keyserver 'hkp://keyserver.ubuntu.com:80' --recv-key C1CF6E31E6BADE8868B172B4F42ED6FBAB17C654`
   * `sudo apt update`
   * `sudo apt install ros-noetic-desktop-full`
   * `echo "source /opt/ros/noetic/setup.bash" >> ~/.bashrc`
-  * <font color="#dd0000">建议没有ROS基础的同学先去B站学习古月老师的ROS入门教程</font>
-* 测试ROS
-  * 打开三个终端，分别输入
+  * Учащимся, не знакомым с ROS, рекомендуется сначала изучить вводное руководство по ROS от Гуюджу на языке Bilibili. 
+* тест ROS
+  * Откройте терминал и войдите 
   * `roscore`
   * `rosrun turtlesim turtlesim_node`
   * `rosrun turtlesim turtle_teleop_key`
-* realsense驱动安装
+* установка драйвера реалсенс 
   * `sudo apt-key adv --keyserver keyserver.ubuntu.com --recv-key  F6E65AC044F831AC80A06380C8B3A55A6F3EFCDE || sudo apt-key adv --keyserver hkp://keyserver.ubuntu.com:80 --recv-key  F6E65AC044F831AC80A06380C8B3A55A6F3EFCDE`
   * `sudo add-apt-repository "deb https://librealsense.intel.com/Debian/apt-repo $(lsb_release -cs) main" -u`
   * `sudo apt-get install librealsense2-dkms`
   * `sudo apt-get install librealsense2-utils`
   * `sudo apt-get install librealsense2-dev`
   * `sudo apt-get install librealsense2-dbg`
-  * 测试：`realsense-viewer`
-  * <font color="#dd0000">注意测试时左上角显示的USB必须是3.x，如果是2.x，可能是USB线是2.0的，或者插在了2.0的USB口上（3.0的线和口都是蓝色的）</font>
-* 安装mavros
+  * тест: `realsense-viewer`
+  * Обратите внимание, что подключенный порт USB должен быть 3.x (синий).
+* Установка mavros
   * `sudo apt-get install ros-noetic-mavros`
   * `cd /opt/ros/noetic/lib/mavros`
   * `sudo ./install_geographiclib_datasets.sh`
-* 安装ceres与glog与ddyanmic-reconfigure
-  * 解压`3rd_party.zip`压缩包
-  * 进入glog文件夹打开终端
+* установка ceres, glog и ddyanmic-reconfigure 
+  * распаковать `3rd_party.zip`
+  * Откройте терминал и введите ./glog 
   * `./autogen.sh && ./configure && make && sudo make install`
   * `sudo apt-get install liblapack-dev libsuitesparse-dev libcxsparse3.1.2 libgflags-dev libgoogle-glog-dev libgtest-dev`
-  * 进入ceres文件夹打开终端
+  * Откройте терминал и введите ./ceres 
   * `mkdir build`
   * `cd build`
   * `cmake ..`
   * `sudo make -j4`
   * `sudo make install`
   * `sudo apt-get install ros-noetic-ddynamic-reconfigure`
-* 下载ego-planner源码并编译
+* Скачайте код эго-планировщика и скомпилируйте 
   * `git clone https://github.com/ZJU-FAST-Lab/Fast-Drone-250`
   * `cd Fast-Drone-250`
   * `catkin_make`
   * `source devel/setup.bash`
   * `roslaunch ego_planner single_run_in_sim.launch`
-  * 在Rviz内按下键盘G键，再单击鼠标左键以点选无人机目标点
+  * Нажмите клавишу G на клавиатуре в Rviz, затем щелкните левой кнопкой мыши, чтобы выбрать целевую точку дрона. 
 
 ## 第八章：常用实验与调试软件的安装与使用
 
