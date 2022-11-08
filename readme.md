@@ -1,6 +1,6 @@
 <font size=6> **Создание автономного воздушного робота с нуля** </font>
 
-Это сопутствующий документ к видеоуроку [Создание автономного воздушного робота с нуля] (https://www.bilibili.com/video/BV1WZ4y167me?p=1), ссылка на github - https://github.com/ZJU-FAST-Lab/Fast-Drone-. 250
+Это сопутствующий документ к видеоуроку [Создание автономного воздушного робота с нуля] (https://www.bilibili.com/video/BV1WZ4y167me?p=1), ссылка на github - https://github.com/ZJU-FAST-Lab/Fast-Drone-250
 
 <font color="#dd0000">Вопросы безопасности</font>
 
